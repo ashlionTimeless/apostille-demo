@@ -110,8 +110,10 @@ class EthereumLibClass{
                     data: params.data,
                 };
                 let tx = new EthereumTx(txParams);
+                console.log("Unsigned transaction: "+tx);
                 tx.sign(privKeyBuffer);
                 let raw = '0x' + tx.serialize().toString('hex');
+                console.log("Signed transaction: "+raw);
                 let result = await this.sendTransactionWithHash(raw);
                 return resolve(result);
             }catch(e){
