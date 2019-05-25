@@ -25,10 +25,35 @@
         <div>
             <p>Step 1: insert your private key. This private key is used to sign the Apostile Sending operation</p>
             <input id="privKey" placeholder="Paste your key here">
+             <div class="card-body">
+            <p class="card-title pricing-card-title">To work with blockchain you likely need private key with ether for transactions. If you dont have private key - click here and I will give you random private key with some testnet Ethereum.</p>
+            <button onclick="giveMePrivKey()" type="button" class="btn btn-lg btn-block btn-primary">Give me private key</button>
+        </div>
+<script>
+
+        let privateKeys = [
+        "479b1797b38b42e34cceee7a468ccbaa88ea8b87a68fd4690f14662b9861450e",
+        "811e620489b648b2567cd46f56c8e1e2d252da42c8a7d18b6a5c9e20f512e479",
+        "4f9677088a48cfd52c9300db7df982e1d3d7ac09945e244df4a417fc28f58408",
+        "7c228a3728502833ee44bb118b7cc1fbc37f1d3be6769bb5f24e1ca4251b9be0",
+        "3de49d0159ebba5d5b28d96bc6724958ad3f20bc70ba90062873c1926f92b81b"
+        ]
+        function giveMePrivKey(){
+                let privKey = privateKeys[getRandomInt(privateKeys.length)];
+        alert("Copy this private key: "+privKey);
+        }
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+</script>
         </div>
         <div>
             <p>Step 2: Select document:</p>
             <input type="file" id="fileinput">            
+        	<p>After you select the document, it will be converted to Base64 encoding, than it will be fed into sha256 hash function and be transformed into hash</p>
+       		<button onclick="alert(base64)"> How my document looks in base64?</button>
+       		<button onclick="alert(sha256)"> How my document looks in hash?</button>
         </div>
         <div>
             <p>Step 3: Type in some tag for your new apostille. The Apostille will be saved in unreadable format, so this tag will help find particular apostille</p>
@@ -107,7 +132,7 @@
                 try{
                     let result = await application.addApostille(sha256,_tag,privKey);
                     if(result){
-                        document.getElementById("addApostilleMessage").innerHTML = "You have uploaded your apostille by creating transaction <br>"+result+"<br> You can look up its progress <a href='https://ropsten.etherscan.io/tx/"+result+"'> HERE </a>"
+                        document.getElementById("addApostilleMessage").innerHTML = "You have uploaded your apostille by creating transaction <br>"+result+"<br> You can look up its progress <a href='https://ropsten.etherscan.io/tx/"+result+"'> HERE </a> By the way, transaction structure was dumped into your browser console. You may open it by pressing F12, Ctrl+Shift+I or other combinations depending on your browser"
                     }
                 }catch(e){
                     alert(e)
